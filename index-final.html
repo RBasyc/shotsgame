@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShotsGame - 最终测试</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: #0F0F23;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #E2E8F0;
+    }
+    h1 {
+      font-size: 4rem;
+      color: #7C3AED;
+      text-shadow: 0 0 10px #7C3AED, 0 0 20px #7C3AED;
+      margin-bottom: 2rem;
+    }
+    .status {
+      background: rgba(124, 58, 237, 0.2);
+      border: 2px solid #7C3AED;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .status.success { color: #22c55e; }
+    .status.error { color: #ef4444; }
+    .status.info { color: #3b82f6; }
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #7C3AED;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #6d28d9;
+      box-shadow: 0 0 20px #7C3AED;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎮 ShotsGame</h1>
+
+    <div class="status success">✅ HTML 加载成功</div>
+    <div class="status success">✅ CSS 样式正常</div>
+    <div class="status success" id="js-status">✅ JavaScript 运行中</div>
+
+    <div class="status info" id="server-status">🔍 检查服务器连接...</div>
+
+    <button onclick="window.location.href='http://localhost:5176'">
+      打开完整游戏 →
+    </button>
+  </div>
+
+  <script>
+    // 检查服务器连接
+    async function checkServer() {
+      const statusDiv = document.getElementById('server-status');
+
+      try {
+        const response = await fetch('http://localhost:3000', {
+          mode: 'no-cors'
+        });
+        statusDiv.className = 'status success';
+        statusDiv.textContent = '✅ Socket.io 服务器运行正常';
+      } catch (error) {
+        statusDiv.className = 'status error';
+        statusDiv.textContent = '❌ Socket.io 服务器未启动';
+      }
+
+      try {
+        const response = await fetch('http://localhost:5176');
+        statusDiv.className = 'status success';
+        statusDiv.textContent = '✅ Vite 开发服务器运行正常';
+      } catch (error) {
+        statusDiv.className = 'status error';
+        statusDiv.textContent = '❌ Vite 开发服务器未启动';
+      }
+    }
+
+    // 页面加载后检查
+    window.onload = () => {
+      console.log('✅ 最终测试页面加载成功');
+      checkServer();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+/**
+ * ShotsGame - Retro-Futurism 样式
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap');
+
+:root {
+  --color-primary: #7C3AED;
+  --color-secondary: #A78BFA;
+  --color-cta: #F43F5E;
+  --color-background: #0F0F23;
+  --color-text: #E2E8F0;
+  --color-blue-team: #3B82F6;
+  --color-red-team: #EF4444;
+
+  --font-heading: 'Russo One', sans-serif;
+  --font-body: 'Chakra Petch', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+/* CRT 扫描线效果 */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.crt-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* 霓虹发光效果 */
+.neon-text {
+  text-shadow:
+    0 0 5px var(--color-primary),
+    0 0 10px var(--color-primary),
+    0 0 20px var(--color-primary),
+    0 0 40px var(--color-primary);
+}
+
+.neon-box {
+  box-shadow:
+    0 0 5px var(--color-primary),
+    0 0 10px var(--color-primary),
+    0 0 20px var(--color-primary);
+}
+
+.neon-border {
+  border: 2px solid var(--color-primary);
+  box-shadow:
+    0 0 5px var(--color-primary),
+    inset 0 0 5px var(--color-primary);
+}
+
+/* Glitch 效果 */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+
+.glitch:hover {
+  animation: glitch 0.1s infinite;
+}
+
+/* 按钮样式 */
+.btn-retro {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-text);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.btn-retro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.btn-retro:hover::before {
+  left: 0;
+}
+
+.btn-retro:hover {
+  color: white;
+  box-shadow:
+    0 0 10px var(--color-primary),
+    0 0 20px var(--color-primary),
+    0 0 30px var(--color-primary);
+}
+
+.btn-cta {
+  border-color: var(--color-cta);
+}
+
+.btn-cta::before {
+  background: var(--color-cta);
+}
+
+.btn-cta:hover {
+  box-shadow:
+    0 0 10px var(--color-cta),
+    0 0 20px var(--color-cta),
+    0 0 30px var(--color-cta);
+}
+
+/* 游戏 HUD */
+.game-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.hud-top {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hud-score {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  padding: 0.5rem 1.5rem;
+  background: rgba(15, 15, 35, 0.8);
+  border: 2px solid;
+  border-radius: 8px;
+}
+
+.score-blue {
+  border-color: var(--color-blue-team);
+  color: var(--color-blue-team);
+  text-shadow: 0 0 10px var(--color-blue-team);
+}
+
+.score-red {
+  border-color: var(--color-red-team);
+  color: var(--color-red-team);
+  text-shadow: 0 0 10px var(--color-red-team);
+}
+
+.hud-bottom {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.health-bar {
+  width: 300px;
+  height: 30px;
+  background: rgba(15, 15, 35, 0.8);
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.health-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+  transition: width 0.3s ease;
+}
+
+.health-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  text-shadow: 0 0 5px black;
+}
+
+/* 准星 */
+.crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.crosshair-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-primary);
+}
+
+.crosshair-hit .crosshair-dot {
+  background: #ff0000;
+  box-shadow: 0 0 20px #ff0000;
+}
+
+/* 击杀提示 */
+.kill-feed {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.kill-message {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(15, 15, 35, 0.9);
+  border: 2px solid var(--color-cta);
+  border-radius: 4px;
+  animation: killFadeIn 0.3s ease, killFadeOut 0.3s ease 2.7s forwards;
+  color: var(--color-cta);
+  text-shadow: 0 0 10px var(--color-cta);
+}
+
+@keyframes killFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes killFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* 主菜单 */
+.game-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  z-index: 200;
+}
+
+.menu-title {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.menu-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: var(--color-secondary);
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 游戏结束画面 */
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 15, 35, 0.95);
+  z-index: 300;
+}
+
+.game-over-title {
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.game-over-winner {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.game-over-winner.victory {
+  color: var(--color-primary);
+  text-shadow: 0 0 20px var(--color-primary);
+}
+
+.game-over-winner.defeat {
+  color: var(--color-cta);
+  text-shadow: 0 0 20px var(--color-cta);
+}
+
+/* 移动端横屏提示 */
+.landscape-warning {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-background);
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.landscape-warning-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.landscape-warning-text {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .landscape-warning {
+    display: flex;
+  }
+}
